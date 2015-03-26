@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="store">
+	<head>
+		<title>AngularJS Level 2 Filters and a New Directive</title>
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+	</head>
+	<body ng-controller="StoreController as store">
+		<div ng-repeat="product in store.products | orderBy:'-price' | limitTo:3" ng-hide="product.soldOut">
+			<h1>{{product.name}}</h1>
+			<h2>{{product.price | currency}}</h2>
+			<p>{{product.description}} {{product.foundDate | date:'MM/dd/yyyy @ h:mma'}}</p>
+			<img ng-src="product.image" />
+			<button ng-show="{{store.product.canPurchase}}">Add to Cart</button>
+		</div>
+
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script type="text/javascript">
+			var appModule = angular.module('store', []);
+
+			appModule.controller('StoreController', function() {
+				this.products = gems;
+			});
+
+			var gems = [
+				{
+					name: 'Dodecahedron Gem',
+					price: 2.00,
+					description: 'Lorem Ipsum Text',
+					foundDate: '1388123412323',
+					canPurchase: true,
+					soldOut: false,
+					image: 'path1'
+				},
+				{
+					name: 'Pentagonal Gem',
+					price: 5.95,
+					description: 'Lorem Ipsum Text',
+					foundDate: '1388123412323',
+					canPurchase: false,
+					soldOut: false,
+					image: 'path2'
+				}
+			];
+		</script>
+	</body>
+</html>
+
