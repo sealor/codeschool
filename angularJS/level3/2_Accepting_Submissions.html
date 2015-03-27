@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8" />
+		<title>AngularJS Level 3 Accepting Submissions</title>
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+	</head>
+	<body>
+		<section ng-controller="StoreController as store">
+			<h1>Reviews</h1>
+			<blockquote ng-repeat="review in store.reviews">
+				<b>Stars: {{review.stars}}</b><br />
+				{{review.body}}<br />
+				<cite>by: {{review.author}}</cite>
+			</blockquote>
+			<form name="reviewForm" ng-controller="ReviewCtrl as reviewCtrl" ng-submit="reviewCtrl.addReview(store)">
+				<blockquote>
+					<b>Stars: {{reviewCtrl.review.stars}}</b><br />
+					{{reviewCtrl.review.body}}<br />
+					<cite>by: {{reviewCtrl.review.author}}</cite>
+				</blockquote>
+				<select ng-model="reviewCtrl.review.stars">
+					<option value="1">1 star</option>
+					<option value="2">2 stars</option>
+					<option value="3">3 stars</option>
+				</select><br />
+				<textarea ng-model="reviewCtrl.review.body"></textarea><br />
+				<label>by:</label>
+				<input type="email" ng-model="reviewCtrl.review.author" /><br />
+				<input type="submit" value="Submit" />
+			</form>
+		</section>
+
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script type="text/javascript">
+			var app = angular.module("app", []);
+
+			app.controller("StoreController", function() {
+				this.reviews = [
+					{ stars: 3, body: "I love this product!", author: "joe@thomas.com" },
+					{ stars: 1, body: "This product sucks", author: "time@hater.com" }
+				];
+			});
+
+			app.controller("ReviewCtrl", function() {
+				this.review = { stars: 2 };
+
+				this.addReview = function(store) {
+					store.reviews.push(this.review);
+					this.review = { stars: 2 };
+				};
+			});
+		</script>
+	</body>
+</html>
+
